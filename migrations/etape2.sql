@@ -27,9 +27,12 @@ INSERT INTO categories (nom) VALUES
 ('Plat chinois'),
 ('Soupe'),
 ('Dessert et goûter'),
-('Boisson');
+('Boisson'),
+('Plat japonais');
 
-ALTER TABLE plats ADD COLUMN categorie_id INT FOREIGN KEY REFERENCES categories(id);
+ALTER TABLE plats ADD COLUMN categorie_id INT,
+ADD CONSTRAINT fk_plats_categories,
+FOREIGN KEY REFERENCES categories(id);
 
 UPDATE plats SET categorie_id = (SELECT id FROM categories WHERE nom = plats.categorie);
 
