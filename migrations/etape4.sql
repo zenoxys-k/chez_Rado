@@ -179,6 +179,21 @@ BEGIN
     INTO :NEW.id
     FROM dual;
 END;
+
+INSERT INTO commandes(total, date_commande) VALUES (0, SYSDATE);
+
+INSERT INTO commande_details (commande_id, plat_id, quantite, prix_unitaire, montant)
+VALUES (1, 1, 2, 7000, 14000);
+INSERT INTO commande_details (commande_id, plat_id, quantite, prix_unitaire, montant)
+VALUES (1, 2, 1, 8000, 8000);
+
+UPDATE commandes c
+SET c.total = (
+    SELECT SUM(cd.montant)
+    FROM commande_details cd
+    WHERE cd.commande_id = c.id
+)
+WHERE c.id = 1;
 /
 
 
